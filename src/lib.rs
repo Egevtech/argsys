@@ -1,14 +1,17 @@
-pub fn add(left: u64, right: u64) -> u64 {
-    left + right
+pub struct Arg 
+{
+    pub template: String,
+    pub short: Option<String>,
+    pub descript: String
 }
 
-#[cfg(test)]
-mod tests {
-    use super::*;
+pub fn build_arg( template: &str, short: Option<&str>, descript: &str ) -> Arg 
+{
+    Arg {
 
-    #[test]
-    fn it_works() {
-        let result = add(2, 2);
-        assert_eq!(result, 4);
+        template: template.to_string(),
+        short: if short == None { None } else { Some(short.unwrap().to_string()) },
+        descript: descript.to_string()
+
     }
 }
