@@ -2,5 +2,9 @@
 name = "argsys"
 version = "0.0.1"
 edition = "2024"
+description = "Simple argument-handler library"
+repository = "https://github.com/egevtech/argsys"
+license = "GPL-3.0-or-later"
+license-file = "LICENSE"
 
 [dependencies]
