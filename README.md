@@ -1,5 +1,8 @@
 # ArgSys 0.0.2
 
+- github - [here](https://github.com/egevtech/argsys)
+- crates.io - [here](https://crates.io/crates/argsys)
+
 At first, you need to create templates:
 ``` rust
 let mut templates: Vec<Arg> = Vec::new();
