@@ -1,4 +1,4 @@
-# ArgSys 0.0.2
+# ArgSys 0.0.3-beta
 
 - github - [here](https://github.com/egevtech/argsys)
 - crates.io - [here](https://crates.io/crates/argsys)
