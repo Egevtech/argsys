@@ -30,3 +30,8 @@ pub fn get_arg_index( args: Vec<Arg>, template: String ) -> Option<usize>
 
     None
 }
+
+pub fn get_arg_description( args: Vec<Arg>, index: usize) -> String
+{
+    args[index].descript.clone()
+}
