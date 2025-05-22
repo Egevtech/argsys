@@ -32,7 +32,7 @@ let args: Vec<String> = env::args().collect();
 for i in 1..args.len() { // Skip first argument
     let current: String = args[i].clone();
 
-match get_arg_index( templates.clone(), current.clone() ) {
+    match get_arg_index( templates.clone(), current.clone() ) {
 
         Some(0) => {} // --help
         Some(1) => {} // --list
@@ -43,7 +43,17 @@ match get_arg_index( templates.clone(), current.clone() ) {
 }
 
 ```
-Support for 'description' field is coming soon.
+Description you can get by special function:
+
+```rust
+get_arg_description( templates, 0 );
+```
+or
+```rust
+for i in 0..args.len() {
+    get_arg_description( templates, i );
+}
+```
 
 And full example:
 ``` rust
@@ -77,5 +87,6 @@ fn main()
 }
 
 ```
+Also try [new version of this README](funcs.md)
 
 ###### ArgSys help - v0.0.1-0.0.2
