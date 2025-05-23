@@ -45,7 +45,7 @@ fn main()
     let args: Vec<String> = env::args().collect();
 
     for i in 1..args.len() {
-        let current: String = args[i],clone();
+        let current: String = args[i].clone();
 
         // Returns index of current in array or 'None' if not found
         match get_arg_index( templates.clone(), current.clone() ) {
