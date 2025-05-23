@@ -1,4 +1,4 @@
-# ArgSys v0.1.0
+# ArgSys v0.1.1
 
 Simple app arguments handler library
 
@@ -13,11 +13,12 @@ pub struct Arg
 {
     pub template: String,
     pub short: Option<String>,
-    pub descript: String
+    pub descript: String,
+    pub param_num: usize
 }
 
 // Just more simple way to create Arg
-pub fn build_arg( template: &str, short: Option<&str>, descript: &str ) -> Arg;
+pub fn build_arg( template: &str, short: Option<&str>, descript: &str, param_num: usize ) -> Arg;
 
 // Returns arg index in array or None if not exists
 pub fn get_arg_index( args: Vec<Arg>, template: String ) -> Option<usize>;

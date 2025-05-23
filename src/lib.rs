@@ -7,14 +7,14 @@ pub struct Arg
     pub param_num: usize
 }
 
-pub fn build_arg( template: &str, short: Option<&str>, descript: &str ) -> Arg 
+pub fn build_arg( template: &str, short: Option<&str>, descript: &str, param_num: usize ) -> Arg 
 {
     Arg {
 
         template: template.to_string(),
         short: if short == None { None } else { Some(short.unwrap().to_string()) },
         descript: descript.to_string(),
-        param_num: 0
+        param_num: param_num
     }
 }
 
