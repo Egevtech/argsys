@@ -8,5 +8,9 @@ Simple app arguments handler library
 
 ### Documentation is comming soon
 
-I'll be grateful for the star on [github](https://github.com/egevtech/argsys)
+#### Some information you can get from [here](https://docs.rs/argsys/0.2.0/argsys/)
+
+##
+
+I'll be grateful for the star on [github](https://github.com/egevtech/argsys) <p>
 Changelog you can see [here](changelog.md)
