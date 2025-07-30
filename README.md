@@ -1,4 +1,4 @@
-# ArgSys v0.2.0
+# ArgSys v1.0.0
 
 Simple app arguments handler library
 
