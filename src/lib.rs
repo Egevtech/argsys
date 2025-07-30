@@ -8,7 +8,7 @@ pub struct Template
 }
 
 
-pub fn build_template(template: &str, tshort: Option<&str>, descript: &str, pnum: usize) -> Template {
+pub fn build_template(template: &str, tshort: Option<&str>, descript: &str, pnum: usize) -> Template { // Just more simple way to create Template structure object
     Template {
         template: template.to_string(),
         short: match tshort {
@@ -60,22 +60,22 @@ impl Default for ArgHandler {
 
 impl ArgHandler {
 
-    pub fn add_template(&mut self, template: Template) {
+    pub fn add_template(&mut self, template: Template) { // Add template to templates list
         self.templates.push(template);
     }
 
-    pub fn init(&mut self, args: Vec<String>, skip_first: bool)
+    pub fn init(&mut self, args: Vec<String>, skip_first: bool) // Init arghandler by arguments
     {
         self.args = args.clone();
         self.skip_first = skip_first;
     }
 
-    pub fn add_trigger(&mut self, trigger: Template, action: Action)
+    pub fn add_trigger(&mut self, trigger: Template, action: Action) // Add trigger and action for this trigger
     {
         self.trigs_and_actions.push(TrigAction{trigger, action});
     }
 
-    pub fn run(&mut self) {
+    pub fn run(&mut self) { // Run handler
 
         for mut arg_number in self.skip_first as usize..self.args.len() {
             let arg: String = self.args[arg_number].clone();
