@@ -6,9 +6,7 @@ Simple app arguments handler library
 - [github](https://github.com/egevtech/argsys)
 - [crates.io](https://crates.io/crates/argsys)
 
-### Documentation is comming soon
-
-#### Some information you can get from [here](https://docs.rs/argsys/0.2.0/argsys/)
+#### Documentation available [here](https://docs.rs/argsys/0.2.0/argsys/)
 
 ##
 
