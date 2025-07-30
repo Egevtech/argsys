@@ -1,3 +1,8 @@
+// Type aliasing
+type Action = fn(Vec<String>);
+
+
+// Template struct
 #[derive(Clone, PartialEq)]
 pub struct Template
 {
@@ -7,6 +12,14 @@ pub struct Template
     pub param_num: usize
 }
 
+impl std::fmt::Display for Template
+{
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+        write!(f, "{}({}) <{}> - {}", self.template.clone(),
+                if self.short == None { "None".to_string() } else { self.short.clone().unwrap() },
+                self.param_num, self.descript.clone())
+    }
+}
 
 pub fn build_template(template: &str, tshort: Option<&str>, descript: &str, pnum: usize) -> Template { // Just more simple way to create Template structure object
     Template {
@@ -20,17 +33,8 @@ pub fn build_template(template: &str, tshort: Option<&str>, descript: &str, pnum
     }
 }
 
-impl std::fmt::Display for Template
-{
-    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-        write!(f, "{}({}) <{}> - {}", self.template.clone(),
-                if self.short == None { "None".to_string() } else { self.short.clone().unwrap() },
-                self.param_num, self.descript.clone())
-    }
-}
 
-type Action = fn(Vec<String>);
-
+// TrigAction struct
 #[derive(Clone)]
 struct TrigAction
 {
@@ -38,6 +42,8 @@ struct TrigAction
     pub action: Action
 }
 
+
+// ArgHandler struct
 pub struct ArgHandler {
     templates: Vec<Template>,
     trigs_and_actions: Vec<TrigAction>,
