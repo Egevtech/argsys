@@ -1,9 +1,7 @@
-// Type alliasing
 type Action = fn(Vec<String>);
 type HelpAction = fn(Vec<String>, Vec<Template>);
 
 
-// Template struct 
 #[derive(Clone, PartialEq)]
 pub struct Template
 {
@@ -22,7 +20,7 @@ impl std::fmt::Display for Template
     }
 }
 
-pub fn build_template(template: &str, tshort: Option<&str>, descript: &str, pnum: usize) -> Template { // Just more simple way to create Template structure object
+pub fn build_template(template: &str, tshort: Option<&str>, descript: &str, pnum: usize) -> Template {
     Template {
         template: template.to_string(),
         short: match tshort {
@@ -34,8 +32,6 @@ pub fn build_template(template: &str, tshort: Option<&str>, descript: &str, pnum
     }
 }
 
-
-// TrigAction struct
 #[derive(Clone)]
 struct TrigAction
 {
@@ -43,8 +39,6 @@ struct TrigAction
     pub action: Action
 }
 
-
-// ArgHandler struct
 pub struct ArgHandler {
     templates: Vec<Template>,
     trigs_and_actions: Vec<TrigAction>,
@@ -73,25 +67,25 @@ impl Default for ArgHandler {
 
 impl ArgHandler {
 
-    pub fn add_action(&mut self, template: Template, action: Action) { // Add template to templates list
+    pub fn add_action(&mut self, template: Template, action: Action) {
         self.templates.push(template.clone());
         self.trigs_and_actions.push(TrigAction {trigger: template, action: action});
     }
 
-    pub fn add_help_action(&mut self, help_template: Template, help_action: HelpAction) { // Add help trigger and action
+    pub fn add_help_action(&mut self, help_template: Template, help_action: HelpAction) {
         self.templates.push(help_template.clone());
         
         self.help_template = Some(help_template);
         self.help_action = Some(help_action);       
     }
 
-    pub fn init(&mut self, args: Vec<String>, skip_first: bool) // Init arghandler by arguments
+    pub fn init(&mut self, args: Vec<String>, skip_first: bool)
     {
         self.args = args.clone();
         self.skip_first = skip_first;
     }
 
-    pub fn run(&mut self) { // Run handler
+    pub fn run(&mut self) {
 
         for mut arg_number in self.skip_first as usize..self.args.len() {
             let arg: String = self.args[arg_number].clone();
