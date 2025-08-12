@@ -1,8 +1,9 @@
-// Type aliasing
+// Type alliasing
 type Action = fn(Vec<String>);
+type HelpAction = fn(Vec<String>, Vec<Template>);
 
 
-// Template struct
+// Template struct 
 #[derive(Clone, PartialEq)]
 pub struct Template
 {
@@ -48,6 +49,9 @@ pub struct ArgHandler {
     templates: Vec<Template>,
     trigs_and_actions: Vec<TrigAction>,
 
+    help_template: Option<Template>,
+    help_action: Option<HelpAction>,
+
     args: Vec<String>,
     skip_first: bool
 }
@@ -59,26 +63,32 @@ impl Default for ArgHandler {
             templates: vec!(),
             trigs_and_actions: vec!(),
             args: vec!(),
-            skip_first: false
+            skip_first: false,
+
+            help_template: None,
+            help_action: None
         }
     }
 }
 
 impl ArgHandler {
 
-    pub fn add_template(&mut self, template: Template) { // Add template to templates list
-        self.templates.push(template);
+    pub fn add_action(&mut self, template: Template, action: Action) { // Add template to templates list
+        self.templates.push(template.clone());
+        self.trigs_and_actions.push(TrigAction {trigger: template, action: action});
+    }
+
+    pub fn add_help_action(&mut self, help_template: Template, help_action: HelpAction) { // Add help trigger and action
+        self.templates.push(help_template.clone());
+        
+        self.help_template = Some(help_template);
+        self.help_action = Some(help_action);       
     }
 
     pub fn init(&mut self, args: Vec<String>, skip_first: bool) // Init arghandler by arguments
     {
         self.args = args.clone();
         self.skip_first = skip_first;
-    }
-
-    pub fn add_trigger(&mut self, trigger: Template, action: Action) // Add trigger and action for this trigger
-    {
-        self.trigs_and_actions.push(TrigAction{trigger, action});
     }
 
     pub fn run(&mut self) { // Run handler
@@ -100,6 +110,23 @@ impl ArgHandler {
                         }
                     }
                 }
+
+                if self.help_template == None || self.help_action == None {
+                    break;
+                }
+
+                if self.help_template.clone().unwrap().template == arg ||
+                    self.help_template.clone().unwrap().short == Some(arg.clone()) {
+                        let mut param_vec: Vec<String> = vec!();
+                        
+                        for _ in arg_number..arg_number + self.help_template.clone().unwrap().param_num {
+                            arg_number += 1;
+                            param_vec.push(self.args[arg_number].clone());
+                        }
+
+                        (self.help_action.unwrap())(param_vec, self.templates.clone());
+                    }
+                
             }
         } 
     }
