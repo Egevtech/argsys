@@ -119,6 +119,7 @@ impl ArgHandler {
                         }
 
                         (self.help_action.unwrap())(param_vec, self.templates.clone());
+                        break;
                     }
                 
             }
