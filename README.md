@@ -1,7 +1,4 @@
-# ArgSys v1.0.0
-
-Simple app arguments handler library
-
+# ArgSys
 ## Links
 - [github](https://github.com/egevtech/argsys)
 - [crates.io](https://crates.io/crates/argsys)
