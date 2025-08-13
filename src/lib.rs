@@ -1,7 +1,6 @@
 type Action = fn(Vec<String>);
 type HelpAction = fn(Vec<String>, Vec<Template>);
 
-
 #[derive(Clone, PartialEq)]
 pub struct Template
 {
@@ -46,6 +45,9 @@ pub struct ArgHandler {
     help_template: Option<Template>,
     help_action: Option<HelpAction>,
 
+    last_action_trigger: Option<Template>,
+    last_action: Option<Action>,
+
     args: Vec<String>,
     skip_first: bool
 }
@@ -58,6 +60,9 @@ impl Default for ArgHandler {
             trigs_and_actions: vec!(),
             args: vec!(),
             skip_first: false,
+
+            last_action_trigger: None,
+            last_action: None,
 
             help_template: None,
             help_action: None
@@ -81,6 +86,11 @@ impl ArgHandler {
         
         self.help_template = Some(help_template);
         self.help_action = Some(help_action);       
+    }
+
+    pub fn add_last_action(&mut self, template: Template, action: Action) {
+        self.last_action_trigger = Some(template);
+        self.last_action = Some(action);
     }
 
     pub fn init(&mut self, args: Vec<String>, skip_first: bool)
@@ -114,7 +124,8 @@ impl ArgHandler {
                     }
                 }
 
-                if self.help_template == None || self.help_action == None {
+                if (self.help_template == None || self.help_action == None) ||
+                    (self.last_action_trigger == None || self.last_action == None) {
                     break;
                 }
 
@@ -130,6 +141,19 @@ impl ArgHandler {
                         (self.help_action.unwrap())(param_vec, self.templates.clone());
                         break;
                 }
+
+                if self.last_action_trigger.clone().unwrap().template == arg ||
+                    self.last_action_trigger.clone().unwrap().short == Some(arg.clone()) {
+                        let mut param_vec: Vec<String> = vec!();
+
+                        for _ in arg_number..self.args.len() - 1 {
+                            arg_number += 1;
+                            param_vec.push(self.args[arg_number].clone());
+                        }
+
+                        (self.last_action.unwrap())(param_vec);
+                        return Ok(())
+                }   
             }
         } 
         Ok(())
