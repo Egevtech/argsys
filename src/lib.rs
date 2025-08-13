@@ -65,6 +65,10 @@ impl Default for ArgHandler {
     }
 }
 
+pub enum HandlerError {
+    TooFewArgumentsWereGiven
+}
+
 impl ArgHandler {
 
     pub fn add_action(&mut self, template: Template, action: Action) {
@@ -85,7 +89,7 @@ impl ArgHandler {
         self.skip_first = skip_first;
     }
 
-    pub fn run(&mut self) {
+    pub fn run(&mut self) -> Result<(), HandlerError> {
 
         for mut arg_number in self.skip_first as usize..self.args.len() {
             let arg: String = self.args[arg_number].clone();
@@ -94,6 +98,11 @@ impl ArgHandler {
                 if arg == template.template || Some(arg.clone()) == template.short {
                     for trigact in self.trigs_and_actions.clone() {
                         if trigact.trigger == template  {
+
+                            if arg_number < arg_number+template.param_num.clone() {
+                                return Err(HandlerError::TooFewArgumentsWereGiven)
+                            }
+
                             let mut param_vec: Vec<String> = vec!();
                             for _ in arg_number..arg_number+template.param_num.clone() {
                                 arg_number += 1;
@@ -120,9 +129,9 @@ impl ArgHandler {
 
                         (self.help_action.unwrap())(param_vec, self.templates.clone());
                         break;
-                    }
-                
+                }
             }
         } 
+        Ok(())
     }
 }
